@@ -51,4 +51,12 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void ClearClicked(View sender) {
+        // TODO: Finish
+    }
+
+    public void NewWordClicked(View Sender) {
+        // TODO: Finish
+    }
 }
