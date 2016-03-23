@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">RnRScramble</string>
     <string name="action_settings">Settings</string>
-    <string name="title_string"><![CDATA[R & R Scamble Deluxe]]></string>
+    <string name="new_word_text">New Word</string>
+    <string name="clear_text">Clear</string>
+    <string name="title_text"><![CDATA[R & R Scamble Deluxe]]></string>
+    <string name="byline_text">by Ryan Fleming and Ron Struempf</string>
 </resources>

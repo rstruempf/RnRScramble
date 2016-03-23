@@ -17,7 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/title_string"
+        android:text="@string/title_text"
         android:id="@+id/textView"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
@@ -25,10 +25,53 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/byline_text"
         android:id="@+id/textView2"
         android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="57dp" />
+        android:layout_marginTop="10dp"
+        android:maxWidth="200dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scambleText"
+        android:layout_below="@+id/textView2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="71dp"
+        android:minWidth="300dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/answerText"
+        android:layout_below="@+id/scambleText"
+        android:layout_centerHorizontal="true"
+        android:minWidth="300dp"
+        android:layout_marginTop="20dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/clear_text"
+        android:id="@+id/btnClear"
+        android:layout_marginTop="80dp"
+        android:layout_below="@+id/answerText"
+        android:layout_alignLeft="@+id/answerText"
+        android:layout_alignStart="@+id/answerText"
+        android:onClick="ClearClicked"
+        android:layout_marginLeft="25dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/new_word_text"
+        android:id="@+id/btnNewWord"
+        android:layout_alignTop="@+id/btnClear"
+        android:layout_toRightOf="@+id/btnClear"
+        android:layout_toEndOf="@+id/btnClear"
+        android:layout_marginLeft="77dp"
+        android:layout_marginStart="77dp"
+        android:onClick="NewWordClicked" />
 </RelativeLayout>
