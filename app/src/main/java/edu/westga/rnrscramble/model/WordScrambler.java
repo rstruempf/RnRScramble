@@ -23,7 +23,7 @@ public class WordScrambler {
         Random generator = new Random();
 
         while (length > 0) {
-            index = generator.nextInt(wordArray.size());
+            index = generator.nextInt(length);
             scrambledWord += wordArray.get(index);
             wordArray.remove(index);
             length = wordArray.size();
