@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     int selectedLength = 6;
     String selectedWord;
     String scrambledWord;
+    String previousAnswer = "";
     IWordGenerator wordGenerator = new HardCodedWordList();
     TextView scrambleTextView;
     EditText answerTextView;
@@ -50,19 +51,27 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // TODO Auto-generated method stub
+                if (s.toString().equals(previousAnswer)) {
+                    return;
+                }
+                // TODO Finish
+                // convert s to upper case
+                // fill char sequence with scramble
+                // for each character in s,
+                //      if char is in scramble, remove it
+                //      else set invalid input flag and remove that character from s
+                // when done, set answer/prev answer to s, scramble to temp letters, and if invalid
+                //      characters, Toast that invalid characters were entered
             }
 
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count,
-                                          int after) {
-                // TODO Auto-generated method stub
-
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // intentionally blank
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                // TODO
+                // intentionally blank
             }
         });
 
@@ -98,16 +107,21 @@ public class MainActivity extends AppCompatActivity {
 
     public void NewWordClicked(View Sender) {
         selectedWord = wordGenerator.nextWord(selectedLength);
+        // TODO: Assure that word is upper case
         scrambledWord = WordScrambler.Scramble(selectedWord);
+        // TODO: Assure that word is upper case
         setScrambleTextView(scrambledWord);
         setAnswerTextView("");
     }
 
     private void setScrambleTextView(String word) {
+        // TODO: Assure that word is upper case
         scrambleTextView.setText(word);
     }
 
     private void setAnswerTextView(String word) {
+        // TODO: Assure that word is upper case
+        previousAnswer = word;
         answerTextView.setText(word);
     }
 }
