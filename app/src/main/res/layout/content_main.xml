@@ -33,20 +33,21 @@
         android:layout_marginTop="10dp"
         android:maxWidth="200dp" />
 
-    <EditText
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/scambleText"
+        android:id="@+id/scramble_text"
         android:layout_below="@+id/textView2"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="71dp"
+        android:textSize="30dp"
         android:minWidth="300dp" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/answerText"
-        android:layout_below="@+id/scambleText"
+        android:id="@+id/answer_text"
+        android:layout_below="@+id/scramble_text"
         android:layout_centerHorizontal="true"
         android:minWidth="300dp"
         android:layout_marginTop="20dp" />
@@ -57,9 +58,9 @@
         android:text="@string/clear_text"
         android:id="@+id/btnClear"
         android:layout_marginTop="80dp"
-        android:layout_below="@+id/answerText"
-        android:layout_alignLeft="@+id/answerText"
-        android:layout_alignStart="@+id/answerText"
+        android:layout_below="@+id/answer_text"
+        android:layout_alignLeft="@+id/answer_text"
+        android:layout_alignStart="@+id/answer_text"
         android:onClick="ClearClicked"
         android:layout_marginLeft="25dp" />
 

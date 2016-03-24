@@ -8,10 +8,19 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import edu.westga.rnrscramble.R;
+import edu.westga.rnrscramble.model.HardCodedWordList;
+import edu.westga.rnrscramble.model.IWordGenerator;
+import edu.westga.rnrscramble.model.WordScrambler;
 
 public class MainActivity extends AppCompatActivity {
+
+    int selectedLength = 6;
+    String selectedWord;
+    String scrambledWord;
+    IWordGenerator wordGenerator = new HardCodedWordList();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        NewWordClicked(null);
     }
 
     @Override
@@ -53,10 +64,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void ClearClicked(View sender) {
-        // TODO: Finish
+        setScrambleText(scrambledWord);
+        setAnswerText("");
     }
 
     public void NewWordClicked(View Sender) {
-        // TODO: Finish
+        selectedWord = wordGenerator.nextWord(selectedLength);
+        scrambledWord = WordScrambler.Scramble(selectedWord);
+        setScrambleText(scrambledWord);
+        setAnswerText("");
+    }
+
+    private void setScrambleText(String word) {
+        TextView textView = (TextView) findViewById(R.id.scramble_text);
+        textView.setText(word);
+    }
+
+    private void setAnswerText(String word) {
+        TextView textView = (TextView) findViewById(R.id.answer_text);
+        textView.setText(word);
     }
 }
