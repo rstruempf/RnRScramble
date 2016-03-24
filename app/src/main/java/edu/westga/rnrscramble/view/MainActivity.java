@@ -5,9 +5,13 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import edu.westga.rnrscramble.R;
@@ -21,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
     String selectedWord;
     String scrambledWord;
     IWordGenerator wordGenerator = new HardCodedWordList();
+    TextView scrambleTextView;
+    EditText answerTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +41,28 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+            }
+        });
+
+        scrambleTextView = (TextView) findViewById(R.id.scramble_text);
+        answerTextView = (EditText) findViewById(R.id.answer_text);
+        answerTextView.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // TODO
             }
         });
 
@@ -64,24 +92,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void ClearClicked(View sender) {
-        setScrambleText(scrambledWord);
-        setAnswerText("");
+        setScrambleTextView(scrambledWord);
+        setAnswerTextView("");
     }
 
     public void NewWordClicked(View Sender) {
         selectedWord = wordGenerator.nextWord(selectedLength);
         scrambledWord = WordScrambler.Scramble(selectedWord);
-        setScrambleText(scrambledWord);
-        setAnswerText("");
+        setScrambleTextView(scrambledWord);
+        setAnswerTextView("");
     }
 
-    private void setScrambleText(String word) {
-        TextView textView = (TextView) findViewById(R.id.scramble_text);
-        textView.setText(word);
+    private void setScrambleTextView(String word) {
+        scrambleTextView.setText(word);
     }
 
-    private void setAnswerText(String word) {
-        TextView textView = (TextView) findViewById(R.id.answer_text);
-        textView.setText(word);
+    private void setAnswerTextView(String word) {
+        answerTextView.setText(word);
     }
 }
