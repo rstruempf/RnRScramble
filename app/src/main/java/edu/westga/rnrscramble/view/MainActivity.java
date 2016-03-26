@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 // intentionally blank
-                Log.d(APP_TAG, "onTextChanged: s='" + s + "', start=" + start + ", before=" + before + ", count=" + count);
+                //Log.d(APP_TAG, "onTextChanged: s='" + s + "', start=" + start + ", before=" + before + ", count=" + count);
             }
 
             @Override
@@ -53,25 +53,27 @@ public class MainActivity extends AppCompatActivity {
                 // intentionally blank
             }
 
+            private String lastAnswer = "";
+
             @Override
-            public void afterTextChanged(Editable answer) {
-                StringBuilder invalidCharacters = new StringBuilder();
-                StringManager.assureUpperCase(answer);
-                Log.d(APP_TAG, "afterTextChanged: answer='" + answer.toString() + "', ");
-                // Remove all letters from scramble text that have been used
-                String scramble = scrambledWord;
-                for (int idx = 0; idx < answer.length(); idx++) {
-                    char chr = answer.charAt(idx);
-                    if (StringManager.contains(scramble, chr)) {
-                        scramble = StringManager.remove(scramble, chr);
-                    }
-                    else {
-                        invalidCharacters.append(chr);
-                        answer.delete(idx, idx+1);
-                    }
+            public void afterTextChanged(Editable answerEdit) {
+                // if nothing has changed since the last processing, don't do anything
+                if (answerEdit.toString().equals(lastAnswer)) {
+                    return;
                 }
-                // set scramble to letters that have not been used
+                //Log.d(APP_TAG, "afterTextChanged A: answerEdit='" + answerEdit.toString() + "', " + answerTextView.getText());
+                StringBuilder answer = new StringBuilder(answerEdit);
+                StringManager.assureUpperCase(answer);
+                StringBuilder invalidCharacters = new StringBuilder();
+                StringBuilder scramble = new StringBuilder(scrambledWord);
+
+                StringManager.processAnswer(scramble, answer, invalidCharacters);
+                lastAnswer = answer.toString();
+                // update the display fields
                 scrambleTextView.setText(scramble);
+                //answerEdit.replace(0, answerEdit.length(), answer);
+                answerTextView.setText(answer);
+                answerTextView.setSelection(answer.length());
                 if (invalidCharacters.length() > 0) {
                     String text = "Invalid character entered (" + invalidCharacters.toString() + ")";
                     Toast toast = Toast.makeText( getApplicationContext(), text, Toast.LENGTH_SHORT);
@@ -79,7 +81,10 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else if (answer.toString().equals(selectedWord)) {
                     // TODO: Mark as done, Toast You Win!
+                    Toast toast = Toast.makeText( getApplicationContext(), "You Win!!!", Toast.LENGTH_LONG);
+                    toast.show();
                 }
+                //Log.d(APP_TAG, "afterTextChanged B: answerEdit='" + answerEdit.toString() + "', " + answerTextView.getText());
             }
         });
 

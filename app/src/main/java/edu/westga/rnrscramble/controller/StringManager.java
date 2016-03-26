@@ -9,51 +9,51 @@ import android.text.Editable;
  */
 public class StringManager {
     /**
-     * See whether a string contains a given character
-     *
-     * @param str String to search
-     * @param chr Character to search for
-     * @return True if the string contains the given character
-     */
-    public static boolean contains(String str, char chr) {
-        return (str.indexOf(chr) >= 0);
-    }
-
-    /**
      * Remove the first occurrence, if any, of a given character from a string
      *
      * @param str String to modify
      * @param chr Character to remove
-     * @return Modified string
+     * @return True if the letter was found and removed
      */
-    public static String remove(String str, char chr)
+    public static boolean remove(StringBuilder str, char chr)
     {
-        int idx = str.indexOf(chr);
-
-        if (idx < 0) {
-            return str;
+        for (int idx = 0; idx < str.length(); idx++ ) {
+            if (str.charAt(idx) != chr) {
+                continue;
+            }
+            str.delete(idx, idx+1);
+            return true;
         }
-        String firstPart = "";
-        String secondPart = "";
-        if (idx != 0) {
-            firstPart = str.substring(0, idx);
-        }
-        if (idx != str.length() - 1) {
-            secondPart = str.substring(idx+1, str.length());
-        }
-        return firstPart + secondPart;
+        return false;
     }
 
     /**
      * Convert any lowercase characters in an Editable string to uppercase
      *
-     * @param str Editable string to process
+     * @param str StringBuffer to process
      */
-    public static void assureUpperCase(Editable str) {
+    public static void assureUpperCase(StringBuilder str) {
         for (int idx = 0; idx < str.length(); idx++) {
             char chr = str.charAt(idx);
             if (!Character.isUpperCase(chr)) {
                 str.replace(idx, idx+1, String.valueOf(Character.toUpperCase(chr)));
+            }
+        }
+    }
+
+    /**
+     * For a given scramble answer entry, determine what answer should look like, letters remaining, and invalid characters
+     *
+     * @param scramble Scrambled word
+     * @param answer Current answer
+     * @param invalidCharacters Invalid characters that were removed from the answer
+     */
+    public static void processAnswer(StringBuilder scramble, StringBuilder answer, StringBuilder invalidCharacters) {
+        for (int idx = 0; idx < answer.length(); idx++) {
+            char chr = answer.charAt(idx);
+            if (!remove(scramble, chr)) {
+                invalidCharacters.append(chr);
+                answer.delete(idx, idx+1);
             }
         }
     }
