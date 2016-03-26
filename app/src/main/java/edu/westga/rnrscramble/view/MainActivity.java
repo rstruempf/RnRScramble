@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import edu.westga.rnrscramble.R;
 import edu.westga.rnrscramble.model.HardCodedWordList;
@@ -37,15 +38,6 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         scrambleTextView = (TextView) findViewById(R.id.scramble_text);
         answerTextView = (EditText) findViewById(R.id.answer_text);
         answerTextView.addTextChangedListener(new TextWatcher() {
@@ -65,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
             public void afterTextChanged(Editable answer) {
                 StringBuilder invalidCharacters = new StringBuilder();
                 StringManager.assureUpperCase(answer);
-                Log.d(APP_TAG, "afterTextChanged: answer='" + answer.toString());
+                Log.d(APP_TAG, "afterTextChanged: answer='" + answer.toString() + "', ");
                 // Remove all letters from scramble text that have been used
                 String scramble = scrambledWord;
                 for (int idx = 0; idx < answer.length(); idx++) {
@@ -81,7 +73,9 @@ public class MainActivity extends AppCompatActivity {
                 // set scramble to letters that have not been used
                 scrambleTextView.setText(scramble);
                 if (invalidCharacters.length() > 0) {
-                    // TODO: Toast - Invalid character entered
+                    String text = "Invalid character entered (" + invalidCharacters.toString() + ")";
+                    Toast toast = Toast.makeText( getApplicationContext(), text, Toast.LENGTH_SHORT);
+                    toast.show();
                 }
                 else if (answer.toString().equals(selectedWord)) {
                     // TODO: Mark as done, Toast You Win!
