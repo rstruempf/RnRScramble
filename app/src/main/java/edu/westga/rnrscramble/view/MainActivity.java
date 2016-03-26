@@ -6,8 +6,8 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,14 +17,15 @@ import android.widget.TextView;
 import edu.westga.rnrscramble.R;
 import edu.westga.rnrscramble.model.HardCodedWordList;
 import edu.westga.rnrscramble.model.IWordGenerator;
+import edu.westga.rnrscramble.controller.StringManager;
 import edu.westga.rnrscramble.model.WordScrambler;
 
 public class MainActivity extends AppCompatActivity {
+    private static String APP_TAG = "DBGTAG-MainActivity";
 
     int selectedLength = 6;
     String selectedWord;
     String scrambledWord;
-    String previousAnswer = "";
     IWordGenerator wordGenerator = new HardCodedWordList();
     TextView scrambleTextView;
     EditText answerTextView;
@@ -51,27 +52,40 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.toString().equals(previousAnswer)) {
-                    return;
+                // intentionally blank
+                Log.d(APP_TAG, "onTextChanged: s='" + s + "', start=" + start + ", before=" + before + ", count=" + count);
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence answer, int start, int count, int after) {
+                // intentionally blank
+            }
+
+            @Override
+            public void afterTextChanged(Editable answer) {
+                StringBuilder invalidCharacters = new StringBuilder();
+                StringManager.assureUpperCase(answer);
+                Log.d(APP_TAG, "afterTextChanged: answer='" + answer.toString());
+                // Remove all letters from scramble text that have been used
+                String scramble = scrambledWord;
+                for (int idx = 0; idx < answer.length(); idx++) {
+                    char chr = answer.charAt(idx);
+                    if (StringManager.contains(scramble, chr)) {
+                        scramble = StringManager.remove(scramble, chr);
+                    }
+                    else {
+                        invalidCharacters.append(chr);
+                        answer.delete(idx, idx+1);
+                    }
                 }
-                // TODO Finish
-                // convert s to upper case
-                // fill char sequence with scramble
-                // for each character in s,
-                //      if char is in scramble, remove it
-                //      else set invalid input flag and remove that character from s
-                // when done, set answer/prev answer to s, scramble to temp letters, and if invalid
-                //      characters, Toast that invalid characters were entered
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // intentionally blank
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                // intentionally blank
+                // set scramble to letters that have not been used
+                scrambleTextView.setText(scramble);
+                if (invalidCharacters.length() > 0) {
+                    // TODO: Toast - Invalid character entered
+                }
+                else if (answer.toString().equals(selectedWord)) {
+                    // TODO: Mark as done, Toast You Win!
+                }
             }
         });
 
@@ -106,22 +120,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void NewWordClicked(View Sender) {
-        selectedWord = wordGenerator.nextWord(selectedLength);
-        // TODO: Assure that word is upper case
+        selectedWord = wordGenerator.nextWord(selectedLength).toUpperCase();
         scrambledWord = WordScrambler.Scramble(selectedWord);
-        // TODO: Assure that word is upper case
         setScrambleTextView(scrambledWord);
         setAnswerTextView("");
     }
 
     private void setScrambleTextView(String word) {
-        // TODO: Assure that word is upper case
-        scrambleTextView.setText(word);
+        scrambleTextView.setText(word.toUpperCase());
     }
 
     private void setAnswerTextView(String word) {
-        // TODO: Assure that word is upper case
-        previousAnswer = word;
-        answerTextView.setText(word);
+        answerTextView.setText(word.toUpperCase());
     }
 }
