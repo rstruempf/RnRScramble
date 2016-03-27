@@ -18,33 +18,54 @@ public class StringManagerTest {
 
     @Test
     public void testStringContainsAShouldReturnTrue() {
-        assertTrue(StringManager.contains(testString, 'A'));
+        StringBuilder test = new StringBuilder(testString);
+        assertTrue(StringManager.remove(test, 'A'));
     }
 
     @Test
     public void testStringContainsMShouldReturnFalse() {
-        assertFalse(StringManager.contains(testString, 'F'));
+        StringBuilder test = new StringBuilder(testString);
+        assertFalse(StringManager.remove(test, 'F'));
     }
 
     @Test
     public void whenRemoveBFromTestStringShouldReturnAC123ABC() {
-        assertEquals("AC123ABC", StringManager.remove(testString, 'B'));
+        StringBuilder test = new StringBuilder(testString);
+        StringManager.remove(test, 'B');
+        assertEquals("AC123ABC", test.toString());
     }
 
     @Test
     public void whenRemoveBFromTestStringOriginalStringShouldBeUnchanged() {
-        StringManager.remove(testString, 'B');
+        StringBuilder test = new StringBuilder(testString);
+        StringManager.remove(test, 'B');
         assertEquals("ABC123ABC", testString);
     }
 
     @Test
     public void whenRemoveBFromTestStringTwiceShouldReturnAC123AC() {
-        assertEquals("AC123AC", StringManager.remove(StringManager.remove(testString, 'B'), 'B'));
+        StringBuilder test = new StringBuilder(testString);
+        StringManager.remove(test, 'B');
+        StringManager.remove(test, 'B');
+        assertEquals("AC123AC", test.toString());
     }
 
     @Test
     public void whenRemoveMFromTestStringTwiceShouldReturnOriginalString() {
-        assertEquals("ABC123ABC", StringManager.remove(testString, 'M'));
+        StringBuilder test = new StringBuilder(testString);
+        StringManager.remove(test, 'M');
+        assertEquals("ABC123ABC", test.toString());
     }
 
+    @Test
+    public void whenProcessAnswerShouldTrimScrambleUpdateAnswerAndSetInvalidCharacters() {
+        StringBuilder scramble = new StringBuilder("OTAMOT");
+        StringBuilder answer = new StringBuilder("PTOVMAXTM");
+        StringBuilder invalid = new StringBuilder();
+        StringManager.processAnswer(scramble, answer, invalid);
+        // TODO: Fix processAnswer
+        assertEquals("O", scramble.toString());   // TOT
+        assertEquals("TOMAT", answer.toString()); // TOMATM
+        assertEquals("PVXM", invalid.toString()); // PVX
+    }
 }
