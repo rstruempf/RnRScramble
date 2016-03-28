@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                     toast.show();
                 }
                 else if (answer.toString().equals(selectedWord)) {
-                    // TODO: Mark as done, Toast You Win!
+                    // TODO: Set flag saying Done, don't process or allow additional input until clear or new word
                     Toast toast = Toast.makeText( getApplicationContext(), "You Win!!!", Toast.LENGTH_LONG);
                     toast.show();
                 }
