@@ -24,12 +24,13 @@ import edu.westga.rnrscramble.model.WordScrambler;
 public class MainActivity extends AppCompatActivity {
     private static String APP_TAG = "DBGTAG-MainActivity";
 
-    int selectedLength = 6;
-    String selectedWord;
-    String scrambledWord;
-    IWordGenerator wordGenerator = new HardCodedWordList();
-    TextView scrambleTextView;
-    EditText answerTextView;
+    private int selectedLength = 6;
+    private boolean gameOver = false;
+    private String selectedWord;
+    private String scrambledWord;
+    private IWordGenerator wordGenerator = new HardCodedWordList();
+    private TextView scrambleTextView;
+    private EditText answerTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +58,9 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable answerEdit) {
+                if (gameOver) {
+                    return;
+                }
                 // if nothing has changed since the last processing, don't do anything
                 if (answerEdit.toString().equals(lastAnswer)) {
                     return;
@@ -80,7 +84,8 @@ public class MainActivity extends AppCompatActivity {
                     toast.show();
                 }
                 else if (answer.toString().equals(selectedWord)) {
-                    // TODO: Set flag saying Done, don't process or allow additional input until clear or new word
+                    gameOver = true;
+                    answerTextView.setEnabled(false);
                     Toast toast = Toast.makeText( getApplicationContext(), "You Win!!!", Toast.LENGTH_LONG);
                     toast.show();
                 }
@@ -114,15 +119,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void ClearClicked(View sender) {
+        gameOver = false;
         setScrambleTextView(scrambledWord);
         setAnswerTextView("");
+        answerTextView.setEnabled(true);
     }
 
     public void NewWordClicked(View Sender) {
         selectedWord = wordGenerator.nextWord(selectedLength).toUpperCase();
         scrambledWord = WordScrambler.Scramble(selectedWord);
-        setScrambleTextView(scrambledWord);
-        setAnswerTextView("");
+        ClearClicked(Sender);
     }
 
     private void setScrambleTextView(String word) {
