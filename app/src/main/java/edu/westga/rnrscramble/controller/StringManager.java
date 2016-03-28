@@ -54,6 +54,7 @@ public class StringManager {
             if (!remove(scramble, chr)) {
                 invalidCharacters.append(chr);
                 answer.delete(idx, idx+1);
+                idx--;
             }
         }
     }

@@ -63,9 +63,8 @@ public class StringManagerTest {
         StringBuilder answer = new StringBuilder("PTOVMAXTM");
         StringBuilder invalid = new StringBuilder();
         StringManager.processAnswer(scramble, answer, invalid);
-        // TODO: Fix processAnswer
-        assertEquals("O", scramble.toString());   // TOT
-        assertEquals("TOMAT", answer.toString()); // TOMATM
-        assertEquals("PVXM", invalid.toString()); // PVX
+        assertEquals("O", scramble.toString());
+        assertEquals("TOMAT", answer.toString());
+        assertEquals("PVXM", invalid.toString());
     }
 }
