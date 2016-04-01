@@ -54,4 +54,8 @@ public class TileMapManager {
     public int getTile(Character character) {
         return this.tileMap.get(character);
     }
+
+    public boolean contains(Character key) {
+        return this.tileMap.containsKey(key);
+    }
 }
