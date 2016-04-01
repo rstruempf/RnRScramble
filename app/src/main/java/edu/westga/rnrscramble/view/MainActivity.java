@@ -1,5 +1,6 @@
 package edu.westga.rnrscramble.view;
 
+import android.app.ActionBar;
 import android.os.Bundle;
 
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -118,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
                         MainActivity.this.imageLayout.removeView(tile);
                         MainActivity.this.answerLayout.addView(tile);
                         MainActivity.this.checkAnswer();
+                        tile.setForegroundGravity(View.TEXT_ALIGNMENT_CENTER);
                     } else {
                         MainActivity.this.answerLayout.removeView(tile);
                         MainActivity.this.imageLayout.addView(tile);
