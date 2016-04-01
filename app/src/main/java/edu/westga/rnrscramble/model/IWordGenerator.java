@@ -9,8 +9,23 @@ package edu.westga.rnrscramble.model;
 public interface IWordGenerator {
 
     /**
+     * Minimum word length available from generator
+     *
+     * @return Min word length available
+     */
+    int minLength();
+
+    /**
+     * Maximum word length available from generator
+     *
+     * @return Max word length available
+     */
+    int maxLength();
+
+    /**
      * Returns a string of the desired length
-     * @param length - length of the string to return
+     *
+     * @param length - length of the string to return (0 for random)
      * @return - A word as a string.
      */
     String nextWord(int length);

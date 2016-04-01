@@ -14,8 +14,22 @@ public class HardCodedWordList implements IWordGenerator {
     private final Random numberGenerator = new Random();
 
     @Override
+    public int minLength() {
+        return 5;
+    }
+
+    @Override
+    public int maxLength() {
+        return 6;
+    }
+
+    @Override
     public String nextWord(int length) {
         String theWord = "";
+
+        if (length == 0) {
+            length = minLength() + numberGenerator.nextInt(maxLength() - minLength()) + 1;
+        }
         if (length == 5) {
             theWord = fiveLetterWordList[numberGenerator.nextInt(fiveLetterWordList.length)];
         } else if (length == 6) {
@@ -27,4 +41,5 @@ public class HardCodedWordList implements IWordGenerator {
         }
         return theWord;
     }
+
 }
