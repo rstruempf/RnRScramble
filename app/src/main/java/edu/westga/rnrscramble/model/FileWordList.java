@@ -1,14 +1,19 @@
 package edu.westga.rnrscramble.model;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Random;
+
+import edu.westga.rnrscramble.R;
 
 /**
  * File driven word generator
@@ -19,15 +24,34 @@ public class FileWordList implements IWordGenerator {
     private static String APP_TAG = "DBGTAG-FileWordList";
 
     private static final Random numberGenerator = new Random();
+    private final Context _context;
     private final int _minLength;
     private final int _maxLength;
     private final List<String> wordList = new ArrayList<>();
 
-    public FileWordList() {
+    public FileWordList(Context context) throws IOException {
+        _context = context;
         _minLength = 0;
         _maxLength = 0;
-        // TODO: Load word list
-        // TODO: Set min/max length
+
+        // This will reference one line at a time
+        String line;
+
+        // open the word list resource
+        InputStream is = _context.getResources().openRawResource(R.raw.wordlist);
+        BufferedReader input = new BufferedReader(new InputStreamReader(is));
+
+        // read the word list
+        while((line = input.readLine()) != null) {
+            if (!isWordValid(line)) {
+                Log.e(APP_TAG, "FileWordList: Invalid word in list, '" + line + "'");
+                continue;
+            }
+            wordList.add(line);
+        }
+
+        // Always close files.
+        is.close();
     }
 
     @Override
@@ -102,7 +126,6 @@ public class FileWordList implements IWordGenerator {
             return wordList.get(wordIndex);
         }
         else {
-            count = 0;
             for (String word : wordList) {
                 if (word.length() != length) {
                     continue;

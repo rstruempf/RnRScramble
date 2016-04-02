@@ -25,8 +25,6 @@ public class TileMapManager {
 
     public TileMapManager() {
         this.tileMap = new HashMap<>();
-        // TODO: Uncomment this once A-L are in project
-        /*
         this.tileMap.put('A', R.mipmap.a);
         this.tileMap.put('B', R.mipmap.b);
         this.tileMap.put('C', R.mipmap.c);
@@ -39,7 +37,6 @@ public class TileMapManager {
         this.tileMap.put('J', R.mipmap.j);
         this.tileMap.put('K', R.mipmap.k);
         this.tileMap.put('L', R.mipmap.l);
-        */
         this.tileMap.put('M', R.mipmap.m);
         this.tileMap.put('N', R.mipmap.n);
         this.tileMap.put('O', R.mipmap.o);
