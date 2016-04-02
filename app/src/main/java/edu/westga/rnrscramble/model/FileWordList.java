@@ -18,16 +18,16 @@ import java.util.Random;
 public class FileWordList implements IWordGenerator {
     private static String APP_TAG = "DBGTAG-FileWordList";
 
-    private final Random numberGenerator = new Random();
+    private static final Random numberGenerator = new Random();
     private final int _minLength;
     private final int _maxLength;
     private final List<String> wordList = new ArrayList<>();
 
     public FileWordList() {
-        // TODO: Load word list
-        // TODO: Set min/max length
         _minLength = 0;
         _maxLength = 0;
+        // TODO: Load word list
+        // TODO: Set min/max length
     }
 
     @Override
@@ -78,8 +78,43 @@ public class FileWordList implements IWordGenerator {
      * @return Selected word
      */
     public static String getWord(int length, List<String> wordList) {
-        // TODO: Get word from list
-        return "SUPERCALIFRAGIOLISTICEXPIALIDOCIOUS";
+        int count;
+        // count number of words of the desired length
+        if (length == 0) {
+            count = wordList.size();
+        }
+        else {
+            count = 0;
+            for (String word : wordList) {
+                if (word.length() == length) {
+                    count++;
+                }
+            }
+        }
+        // if no words of selected length, return empty string
+        if (count == 0) {
+            return "";
+        }
+        // select word to return
+        int wordIndex = numberGenerator.nextInt(count);
+        // return selected word
+        if (length == 0) {
+            return wordList.get(wordIndex);
+        }
+        else {
+            count = 0;
+            for (String word : wordList) {
+                if (word.length() != length) {
+                    continue;
+                }
+                if (wordIndex == 0) {
+                    return word;
+                }
+                wordIndex--;
+            }
+        }
+        // should never happen
+        return "";
     }
 
 }
