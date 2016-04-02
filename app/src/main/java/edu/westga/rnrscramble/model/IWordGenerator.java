@@ -9,6 +9,11 @@ package edu.westga.rnrscramble.model;
 public interface IWordGenerator {
 
     /**
+     * Limit allowed word length
+     */
+    int MAX_WORD_LENGTH = 25;
+
+    /**
      * Minimum word length available from generator
      *
      * @return Min word length available
