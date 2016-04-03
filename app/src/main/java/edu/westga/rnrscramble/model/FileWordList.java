@@ -31,8 +31,6 @@ public class FileWordList implements IWordGenerator {
 
     public FileWordList(Context context) throws IOException {
         _context = context;
-        _minLength = 0;
-        _maxLength = 0;
 
         // This will reference one line at a time
         String line;
@@ -41,14 +39,25 @@ public class FileWordList implements IWordGenerator {
         InputStream is = _context.getResources().openRawResource(R.raw.wordlist);
         BufferedReader input = new BufferedReader(new InputStreamReader(is));
 
+        int min = 0;
+        int max = 0;
         // read the word list
         while((line = input.readLine()) != null) {
             if (!isWordValid(line)) {
                 Log.e(APP_TAG, "FileWordList: Invalid word in list, '" + line + "'");
                 continue;
             }
+            int length = line.length();
+            if (min == 0 || length < min) {
+                min = length;
+            }
+            if (length > max) {
+                max = length;
+            }
             wordList.add(line);
         }
+        _minLength = min;
+        _maxLength = max;
 
         // Always close files.
         is.close();
