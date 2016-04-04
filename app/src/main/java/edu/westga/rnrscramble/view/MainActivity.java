@@ -8,14 +8,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import edu.westga.rnrscramble.R;
 import edu.westga.rnrscramble.controller.TileMapManager;
-import edu.westga.rnrscramble.model.HardCodedWordList;
+import edu.westga.rnrscramble.model.FileWordList;
 import edu.westga.rnrscramble.model.IWordGenerator;
 import edu.westga.rnrscramble.controller.StringManager;
 import edu.westga.rnrscramble.model.WordScrambler;
@@ -29,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean gameOver = false;
     private String selectedWord;
     private String scrambledWord;
-    private IWordGenerator wordGenerator = new HardCodedWordList();
+    private IWordGenerator wordGenerator;
     private LinearLayout imageLayout;
     private LinearLayout answerLayout;
 
@@ -41,10 +40,18 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        try {
+            wordGenerator = new FileWordList(this);
+        }
+        catch (Exception ex) {
+
+        }
         this.imageLayout = (LinearLayout) findViewById(R.id.tileLinearLayout);
         this.answerLayout = (LinearLayout) findViewById(R.id.answerLayout);
         this.btnNewWord = (Button) findViewById(R.id.btnNewWord);
         this.NewWordClicked(this.btnNewWord);
+
+
     }
 
     @Override
@@ -120,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
                         MainActivity.this.imageLayout.removeView(tile);
                         MainActivity.this.answerLayout.addView(tile);
                         MainActivity.this.checkAnswer();
-                        tile.setForegroundGravity(View.TEXT_ALIGNMENT_CENTER);
+
                     } else {
                         MainActivity.this.answerLayout.removeView(tile);
                         MainActivity.this.imageLayout.addView(tile);
