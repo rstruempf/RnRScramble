@@ -65,10 +65,11 @@
         android:text="@string/new_word_text"
         android:id="@+id/btnNewWord"
         android:onClick="NewWordClicked"
-        android:layout_alignTop="@+id/btnClear"
-        android:layout_alignEnd="@+id/answerLayout"
+        android:layout_marginRight="44dp"
+        android:layout_marginEnd="44dp"
+        android:layout_below="@+id/btnClear"
         android:layout_alignRight="@+id/answerLayout"
-        android:layout_marginRight="30dp"/>
+        android:layout_alignEnd="@+id/answerLayout" />
 
     <Button
         android:layout_width="wrap_content"
@@ -77,6 +78,18 @@
         android:id="@+id/hintButton"
         android:onClick="hintClicked"
         android:layout_below="@+id/btnClear"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignLeft="@+id/btnClear"
+        android:layout_alignStart="@+id/btnClear" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Shuffle"
+        android:id="@+id/button2"
+        android:layout_alignTop="@+id/btnClear"
+        android:layout_alignRight="@+id/btnNewWord"
+        android:layout_alignEnd="@+id/btnNewWord"
+        android:layout_alignLeft="@+id/btnNewWord"
+        android:layout_alignStart="@+id/btnNewWord" />
 
 </RelativeLayout>

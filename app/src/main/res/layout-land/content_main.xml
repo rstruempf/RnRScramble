@@ -76,8 +76,22 @@
         android:layout_height="wrap_content"
         android:text="HINT"
         android:id="@+id/hintButton"
-        android:layout_alignBottom="@+id/btnClear"
-        android:layout_centerHorizontal="true"
-        android:onClick="hintClicked" />
+        android:onClick="hintClicked"
+        android:layout_alignTop="@+id/btnNewWord"
+        android:layout_toLeftOf="@+id/btnNewWord"
+        android:layout_toStartOf="@+id/btnNewWord"
+        android:layout_marginRight="52dp"
+        android:layout_marginEnd="52dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Shuffle"
+        android:id="@+id/button"
+        android:layout_alignBottom="@+id/hintButton"
+        android:layout_toLeftOf="@+id/hintButton"
+        android:layout_toStartOf="@+id/hintButton"
+        android:layout_marginRight="36dp"
+        android:layout_marginEnd="36dp" />
 
 </RelativeLayout>
