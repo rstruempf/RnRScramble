@@ -14,6 +14,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import java.util.Random;
+
 import edu.westga.rnrscramble.R;
 import edu.westga.rnrscramble.controller.TileMapManager;
 import edu.westga.rnrscramble.model.FileWordList;
@@ -41,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout imageLayout;
     private LinearLayout answerLayout;
     private HintGenerator hintGenerator;
+    private final Random random = new Random();
 
 
     @Override
@@ -121,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * clears the answer layout and puts all the tiles back
      * into the pool
+     *
      * @param sender
      */
     public void ClearClicked(View sender) {
@@ -132,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
             this.imageLayout.addView(iv);
         }
         this.convertAnswerString();
+        this.shuffle();
     }
 
     /**
@@ -288,6 +294,25 @@ public class MainActivity extends AppCompatActivity {
         for (int count = 0; count < this.imageLayout.getChildCount(); count++) {
             ImageView iv = (ImageView) this.imageLayout.getChildAt(count);
             this.letterPool += iv.getContentDescription();
+        }
+    }
+
+    /**
+     * Shuffle letters in tileLayout
+     */
+    private void shuffle() {
+        int tileCount = this.imageLayout.getChildCount();
+        if (tileCount < 2) {
+            return;
+        }
+        // for several loops
+        for (int cnt=0; cnt < 20; cnt++)
+        {
+            // select a tile randomly
+            int idx = random.nextInt(tileCount);
+            View tile = this.imageLayout.getChildAt(idx);
+            this.imageLayout.removeViewAt(idx);
+            this.imageLayout.addView(tile);
         }
     }
 
