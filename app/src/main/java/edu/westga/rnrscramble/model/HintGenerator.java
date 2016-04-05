@@ -10,34 +10,35 @@ import java.util.IllegalFormatCodePointException;
  */
 public class HintGenerator {
 
-    public Character getHint(String guessString, String fullWord) {
-        Character hintCharacter = null;
+    /**
+     * Empty Constructor.
+     */
+    public HintGenerator() {
+
+    }
+
+    public int getHint(String guessString, String fullWord) {
+
         if (fullWord.equals(null)) {
             throw new IllegalArgumentException("You must enter a word to check");
         }
         if (guessString.equals(null)) {
             throw new IllegalArgumentException("Solution string cannot be null");
         }
-
         if (guessString.equals("")) {
-            hintCharacter = fullWord.charAt(0);
+            return 0;
         }
-        else
-        {
-            char[] guess = guessString.toCharArray();
-            char[] word = fullWord.toCharArray();
-            int index = 0;
 
-            while (guess[index] == word[index]){
-                index++;
+        char[] guess = guessString.toCharArray();
+        char[] word = fullWord.toCharArray();
+        int index = 0;
+
+        while (guess[index] == word[index]) {
+            index++;
+            if (index >= guess.length) {
+                break;
             }
-
-            hintCharacter = word[index];
         }
-
-        return hintCharacter;
+        return index;
     }
-
-
-
 }
