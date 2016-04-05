@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.Random;
 
 import edu.westga.rnrscramble.R;
@@ -57,8 +59,8 @@ public class MainActivity extends AppCompatActivity {
         try {
             wordGenerator = new FileWordList(this);
         }
-        catch (Exception ex) {
-
+        catch (IOException ex) {
+            Log.e(APP_TAG, "IO Error loading word list (" + ex.getMessage() + ")");
         }
 
         this.imageLayout = (LinearLayout) findViewById(R.id.tileLinearLayout);
@@ -126,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
      * clears the answer layout and puts all the tiles back
      * into the pool
      *
-     * @param sender
+     * @param sender Unused
      */
     public void ClearClicked(View sender) {
         gameOver = false;
@@ -137,13 +139,13 @@ public class MainActivity extends AppCompatActivity {
             this.imageLayout.addView(iv);
         }
         this.convertAnswerString();
-        this.shuffle();
+        this.shuffleClick(null);
     }
 
     /**
      * Gets a new word to be guessed when the button is clicked
      *
-     * @param Sender
+     * @param Sender Unused
      */
     public void NewWordClicked(View Sender) {
         this.gameOver = false;
@@ -242,7 +244,7 @@ public class MainActivity extends AppCompatActivity {
                 this.imageLayout.addView(iv);
 
 
-                if(iv.getContentDescription().equals(this.selectedWord.charAt(hintIndex)) && !hintTileFound) {
+                if(iv.getContentDescription().equals(String.valueOf(this.selectedWord.charAt(hintIndex))) && !hintTileFound) {
                     hintTile = iv;
                     hintTileFound = true;
                 }
@@ -300,7 +302,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Shuffle letters in tileLayout
      */
-    private void shuffle() {
+    public void shuffleClick(View view) {
         int tileCount = this.imageLayout.getChildCount();
         if (tileCount < 2) {
             return;
@@ -325,10 +327,10 @@ public class MainActivity extends AppCompatActivity {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         this.setLetterPoolString();
-        outState.putString(this.SELECTED_WORD, this.selectedWord);
-        outState.putString(this.CURRENT_GUESS, this.currentAnswer);
-        outState.putString(this.CURRENT_LETTER_POOL, this.letterPool);
-        outState.putInt(this.CURRENT_WORD_LENGTH, this.selectedLength);
+        outState.putString(SELECTED_WORD, this.selectedWord);
+        outState.putString(CURRENT_GUESS, this.currentAnswer);
+        outState.putString(CURRENT_LETTER_POOL, this.letterPool);
+        outState.putInt(CURRENT_WORD_LENGTH, this.selectedLength);
     }
 }
 

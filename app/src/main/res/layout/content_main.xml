@@ -90,6 +90,7 @@
         android:layout_alignRight="@+id/btnNewWord"
         android:layout_alignEnd="@+id/btnNewWord"
         android:layout_alignLeft="@+id/btnNewWord"
-        android:layout_alignStart="@+id/btnNewWord" />
+        android:layout_alignStart="@+id/btnNewWord"
+        android:onClick="shuffleClick" />
 
 </RelativeLayout>
