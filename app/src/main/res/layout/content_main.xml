@@ -12,7 +12,6 @@
     tools:context=".view.MainActivity"
     tools:showIn="@layout/activity_main">
 
-
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -76,9 +75,8 @@
         android:layout_height="wrap_content"
         android:text="HINT"
         android:id="@+id/hintButton"
-        android:layout_below="@+id/answerLayout"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="26dp"
-        android:onClick="hintClicked" />
+        android:onClick="hintClicked"
+        android:layout_below="@+id/btnClear"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
