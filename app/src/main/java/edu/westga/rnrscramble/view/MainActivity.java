@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
     private static String APP_TAG = "DBGTAG-MainActivity";
     private static String SELECTED_WORD = "Selected-MainActivity";
     private static String CURRENT_GUESS = "Guess-MainActivity";
+    private static String CURRENT_WORD_LENGTH = "WordLength-MainActivity";
+    private static String CURRENT_LETTER_POOL = "LetterPool-MainActivity";
 
     private final TileMapManager tileMap = new TileMapManager();
     private Button btnNewWord;
@@ -34,10 +36,10 @@ public class MainActivity extends AppCompatActivity {
     private String selectedWord;
     private String scrambledWord;
     private String currentAnswer = "";
+    private String letterPool;
     private IWordGenerator wordGenerator;
     private LinearLayout imageLayout;
     private LinearLayout answerLayout;
-
     private HintGenerator hintGenerator;
 
 
@@ -60,8 +62,23 @@ public class MainActivity extends AppCompatActivity {
         this.btnNewWord = (Button) findViewById(R.id.btnNewWord);
 
 
-        if (this.imageLayout.getChildCount() == 0 && this.answerLayout.getChildCount() == 0) {
+        if (savedInstanceState == null) {
             this.NewWordClicked(this.btnNewWord);
+        } else {
+            this.selectedLength = savedInstanceState.getInt(MainActivity.CURRENT_WORD_LENGTH);
+            this.selectedWord = savedInstanceState.getString(MainActivity.SELECTED_WORD);
+            this.currentAnswer = savedInstanceState.getString(MainActivity.CURRENT_GUESS);
+            this.letterPool = savedInstanceState.getString(MainActivity.CURRENT_LETTER_POOL);
+
+            ImageView[] imageList = this.createTiledWord(this.letterPool);
+            for (ImageView iv : imageList) {
+                imageLayout.addView(iv);
+            }
+
+            imageList = this.createTiledWord(this.currentAnswer);
+            for (ImageView iv : imageList) {
+                answerLayout.addView(iv);
+            }
         }
     }
 
@@ -101,6 +118,11 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * clears the answer layout and puts all the tiles back
+     * into the pool
+     * @param sender
+     */
     public void ClearClicked(View sender) {
         gameOver = false;
         int count = 0;
@@ -112,6 +134,11 @@ public class MainActivity extends AppCompatActivity {
         this.convertAnswerString();
     }
 
+    /**
+     * Gets a new word to be guessed when the button is clicked
+     *
+     * @param Sender
+     */
     public void NewWordClicked(View Sender) {
         this.gameOver = false;
         this.clearLayouts();
@@ -179,6 +206,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Gives the user the next correct answer in the selectedWord
+     *
+     * @param v the hint button
+     */
     public void hintClicked(View v) {
         if (this.currentAnswer.length() == this.selectedLength && this.gameOver) {
             Toast toast = Toast.makeText(getApplicationContext(), "You already have the correct answer", Toast.LENGTH_LONG);
@@ -225,19 +257,18 @@ public class MainActivity extends AppCompatActivity {
         this.checkAnswer();
     }
 
+    /**
+     * Clears all the ImageViews from the image and answer layouts.
+     */
     private void clearLayouts() {
         this.imageLayout.removeAllViews();
         this.answerLayout.removeAllViews();
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-        super.onSaveInstanceState(outState, outPersistentState);
-
-        outState.putString(this.SELECTED_WORD, this.selectedWord);
-        outState.putString(this.CURRENT_GUESS, this.currentAnswer);
-    }
-
+    /**
+     * Sets the currentAnswer variable to a string representation of
+     * the tiles in the answerLayout.
+     */
     private void convertAnswerString() {
         currentAnswer = "";
         int count = 0;
@@ -246,6 +277,33 @@ public class MainActivity extends AppCompatActivity {
             currentAnswer += iv.getContentDescription();
             count++;
         }
+    }
+
+    /**
+     * sets the letter pool variable so it can be used to regenerate the
+     * view for the user during an orientation change
+     */
+    private void setLetterPoolString() {
+        this.letterPool = "";
+        for (int count = 0; count < this.imageLayout.getChildCount(); count++) {
+            ImageView iv = (ImageView) this.imageLayout.getChildAt(count);
+            this.letterPool += iv.getContentDescription();
+        }
+    }
+
+    /**
+     * Saves the state of the variables so that the application can be
+     * reconstructed after an orientation change.
+     * @param outState - Bundle holding the required state variables
+     */
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        this.setLetterPoolString();
+        outState.putString(this.SELECTED_WORD, this.selectedWord);
+        outState.putString(this.CURRENT_GUESS, this.currentAnswer);
+        outState.putString(this.CURRENT_LETTER_POOL, this.letterPool);
+        outState.putInt(this.CURRENT_WORD_LENGTH, this.selectedLength);
     }
 }
 
