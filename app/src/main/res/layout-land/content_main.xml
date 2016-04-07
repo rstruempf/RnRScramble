@@ -52,8 +52,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/clear_text"
-        android:id="@+id/btnClear"
-        android:onClick="ClearClicked"
+        android:id="@+id/clearButton"
+        android:onClick="clearClicked"
         android:layout_below="@+id/answerLayout"
         android:layout_marginTop="10dp"
         android:layout_alignStart="@+id/answerLayout"
@@ -64,9 +64,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/new_word_text"
-        android:id="@+id/btnNewWord"
-        android:onClick="NewWordClicked"
-        android:layout_alignTop="@+id/btnClear"
+        android:id="@+id/newwordButton"
+        android:onClick="newwordClicked"
+        android:layout_alignTop="@+id/clearButton"
         android:layout_alignEnd="@+id/answerLayout"
         android:layout_alignRight="@+id/answerLayout"
         android:layout_marginRight="30dp"/>
@@ -79,20 +79,20 @@
         android:onClick="hintClicked"
         android:layout_marginLeft="58dp"
         android:layout_marginStart="58dp"
-        android:layout_alignTop="@+id/btnClear"
-        android:layout_toRightOf="@+id/btnClear"
-        android:layout_toEndOf="@+id/btnClear" />
+        android:layout_alignTop="@+id/clearButton"
+        android:layout_toRightOf="@+id/clearButton"
+        android:layout_toEndOf="@+id/clearButton" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Shuffle"
-        android:id="@+id/button"
+        android:id="@+id/shuffleButton"
         android:layout_marginRight="52dp"
         android:layout_marginEnd="52dp"
-        android:layout_alignTop="@+id/btnNewWord"
-        android:layout_toLeftOf="@+id/btnNewWord"
-        android:layout_toStartOf="@+id/btnNewWord"
+        android:layout_alignTop="@+id/newwordButton"
+        android:layout_toLeftOf="@+id/newwordButton"
+        android:layout_toStartOf="@+id/newwordButton"
         android:onClick="shuffleClick" />
 
 </RelativeLayout>

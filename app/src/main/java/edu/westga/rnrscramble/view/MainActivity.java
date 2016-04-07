@@ -61,11 +61,11 @@ public class MainActivity extends AppCompatActivity {
 
         this.imageLayout = (LinearLayout) findViewById(R.id.tileLinearLayout);
         this.answerLayout = (LinearLayout) findViewById(R.id.answerLayout);
-        this.btnNewWord = (Button) findViewById(R.id.btnNewWord);
+        this.btnNewWord = (Button) findViewById(R.id.newwordButton);
 
 
         if (savedInstanceState == null) {
-            this.NewWordClicked(this.btnNewWord);
+            this.newwordClicked(this.btnNewWord);
         } else {
             this.selectedLength = savedInstanceState.getInt(MainActivity.CURRENT_WORD_LENGTH);
             this.selectedWord = savedInstanceState.getString(MainActivity.SELECTED_WORD);
@@ -107,14 +107,14 @@ public class MainActivity extends AppCompatActivity {
             if (this.selectedLength == 6) {
                 this.selectedLength = 5;
                 this.clearLayouts();
-                this.NewWordClicked(this.btnNewWord);
+                this.newwordClicked(this.btnNewWord);
             }
         }
         if (id== R.id.six_letter_words) {
             if (this.selectedLength == 5) {
                 this.selectedLength = 6;
                 this.clearLayouts();
-                this.NewWordClicked(this.btnNewWord);
+                this.newwordClicked(this.btnNewWord);
             }
         }
         return super.onOptionsItemSelected(item);
@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
      *
      * @param sender Unused
      */
-    public void ClearClicked(View sender) {
+    public void clearClicked(View sender) {
         gameOver = false;
         int count = 0;
         while (count < this.answerLayout.getChildCount()) {
@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
      *
      * @param Sender Unused
      */
-    public void NewWordClicked(View Sender) {
+    public void newwordClicked(View Sender) {
         this.gameOver = false;
         this.clearLayouts();
         selectedWord = wordGenerator.nextWord(selectedLength).toUpperCase();

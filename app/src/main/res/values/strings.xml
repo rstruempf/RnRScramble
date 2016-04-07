@@ -3,4 +3,6 @@
     <string name="action_settings">Settings</string>
     <string name="new_word_text">New Word</string>
     <string name="clear_text">Clear</string>
+    <string name="hint_text">HINT</string>
+    <string name="shuffle_text">Shuffle</string>
 </resources>
