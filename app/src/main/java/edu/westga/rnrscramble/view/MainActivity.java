@@ -1,10 +1,7 @@
 package edu.westga.rnrscramble.view;
 
-import android.app.ActionBar;
-import android.app.AlertDialog;
 import android.os.Bundle;
 
-import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -24,7 +21,6 @@ import edu.westga.rnrscramble.controller.TileMapManager;
 import edu.westga.rnrscramble.model.FileWordList;
 import edu.westga.rnrscramble.model.HintGenerator;
 import edu.westga.rnrscramble.model.IWordGenerator;
-import edu.westga.rnrscramble.controller.StringManager;
 import edu.westga.rnrscramble.model.WordScrambler;
 
 public class MainActivity extends AppCompatActivity {
@@ -200,7 +196,6 @@ public class MainActivity extends AppCompatActivity {
         this.convertAnswerString();
 
         StringBuilder answer = new StringBuilder(currentAnswer);
-        StringManager.assureUpperCase(answer);
 
         if (answer.toString().equals(selectedWord)) {
             gameOver = true;
